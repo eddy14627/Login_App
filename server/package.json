@@ -1,12 +1,12 @@
 {
-  "name": "backend",
+  "name": "server",
   "version": "1.0.0",
   "type": "module",
   "description": "login app",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server.js",
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
     "build": "npm install"
   },
   "author": "Adarsh Mishra",
