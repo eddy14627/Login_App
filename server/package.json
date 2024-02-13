@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "Ecommerce application built with the MERN stack",
+  "description": "login app",
   "main": "server.js",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "build": "npm install"
   },
