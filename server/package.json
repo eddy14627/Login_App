@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server/server.js",
     "server": "nodemon backend/server.js",
-    "build": "npm install && node server.js"
+    "build": "npm install"
   },
   "author": "Adarsh Mishra",
   "license": "MIT",
