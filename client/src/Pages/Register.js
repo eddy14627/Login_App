@@ -13,13 +13,11 @@ function Register() {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [isError, setIsErrors] = useState(true);
   const [finalData, setFinalData] = useState([]);
 
   const steps = ["Personal information", "Address", "Account Setup"];
 
-  // Handle next/back button click
   const handleClick = (direction) => {
     const newStep = direction === "next" ? currentStep + 1 : currentStep - 1;
     if (newStep > 0 && newStep <= steps.length + 1) {
@@ -28,24 +26,19 @@ function Register() {
   };
   const handleConfirm = async () => {
     try {
-      setLoading(true);
-      console.log(userData);
-      const response = await axios.post(`${baseUrl}/api/users`, userData, {
+      await axios.post(`${baseUrl}/api/users`, userData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
     } catch (error) {
       setIsErrors(true);
     } finally {
-      setLoading(false);
       const newStep = currentStep + 1;
       setCurrentStep(newStep);
     }
   };
 
-  // Display the current step component
   const displayStep = (step) => {
     switch (step) {
       case 1:

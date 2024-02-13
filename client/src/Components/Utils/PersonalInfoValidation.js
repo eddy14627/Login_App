@@ -21,6 +21,10 @@ export const personalValidateInput = (
           ? ""
           : "Invalid date format or date is not before today";
       break;
+    case "password":
+      errors.password =
+        value.length < 6 ? "Minimum length is 6 characters" : "";
+      break;
     default:
       break;
   }

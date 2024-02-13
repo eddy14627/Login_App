@@ -1,14 +1,13 @@
-import React, { useState, redirect, useEffect, useContext } from "react";
-// import { AccountValidateInput } from "./";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { baseUrl } from "./url";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Contexts/AppContext";
+import { personalValidateInput } from "../Components/Utils/PersonalInfoValidation";
 
 const Login = () => {
   const [userData, setUserData] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [errors, setIsErrors] = useState(null);
   const navigate = useNavigate();
   const { setToken, setCurrUser } = useContext(AppContext);
@@ -16,11 +15,11 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
+    personalValidateInput(name, value, validationErrors, setValidationErrors);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/api/users/auth`, userData);
       setToken(response.data.token);
@@ -29,8 +28,6 @@ const Login = () => {
     } catch (error) {
       alert("Invalid user data, please try again");
       setUserData({});
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -69,7 +66,7 @@ const Login = () => {
               />
             </div>
             {validationErrors.email && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-xs mt-1 mx-4">
                 {validationErrors.email}
               </p>
             )}
@@ -93,27 +90,21 @@ const Login = () => {
               />
             </div>
             {validationErrors.password && (
-              <p className="text-red-500 text-xs mt-1">
+              <p className="text-red-500 text-xs mt-1 mx-4">
                 {validationErrors.password}
               </p>
             )}
           </div>
           <div class="flex justify-between">
-            <p
-              onClick={() => {}}
-              className="text-blue-500 text-s mt-1 mx-5 my-3"
-            >
-              forget Password?
-            </p>
             <a href="/" className="text-blue-500 text-s mt-1 mx-5">
               Don't have account? or Register
             </a>
           </div>
         </div>
-        <div className="container flex justify-around mt-4 mb-8">
+        <div className="container flex justify-around mt-8 mb-8">
           <button
             onClick={handleSubmit}
-            disabled={errors} // Disable the button if there are validation errors
+            disabled={errors}
             className={`uppercase py-2 px-4 rounded-xl font-semibold cursor-pointer hover:bg-slate-700 hover:text-white transition duration-200 ease-in-out ${
               errors
                 ? "bg-gray-400 text-gray-700 cursor-not-allowed" // Disable styling
